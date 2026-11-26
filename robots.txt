@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://civio.co.th/sitemap.xml
+
+User-agent: *
+Disallow: /service/
