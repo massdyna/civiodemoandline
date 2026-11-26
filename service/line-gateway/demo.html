@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ตัวอย่างแชตบอท LINE · CiViO Service</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eeeee5;--ink:#1f2d25;--muted:#6c786f;--chat:#e6eadb;--paper:#fffefa;--bot:#fffefa;--me:#d9ef79;--line:#e3e3d6;--chip:#fffefa;
+--forest:#163b2d;--forest2:#214b39;--lime:#d9ef79;--ok:#2f7d4f;--warn:#b9791a;--bad:#b3412f;--info:#2b6a9e;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101a15;--ink:#eef2e6;--muted:#9bab9f;--chat:#17231d;--paper:#1f2d25;--bot:#1f2d25;--me:#c6df63;--line:#2c3d33;--chip:#1f2d25;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101a15;--ink:#eef2e6;--muted:#9bab9f;--chat:#17231d;--paper:#1f2d25;--bot:#1f2d25;--me:#c6df63;--line:#2c3d33;--chip:#1f2d25;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 "Noto Sans Thai","Sarabun",system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px}
+.tools{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:430px;font-size:12px;color:var(--muted);align-items:center}
+.tools button{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:20px;padding:5px 11px;font:inherit;cursor:pointer}
+.phone{width:100%;max-width:430px;flex:1;min-height:0;display:flex;flex-direction:column;background:var(--chat);border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 30px rgba(0,0,0,.12)}
+.top{background:var(--forest);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.av{width:36px;height:36px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center;font-weight:800;flex:none}
+.top b{display:block;font-size:15px}.top small{color:var(--lime);font-size:11px}
+#chat{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.row{display:flex;gap:8px;align-items:flex-end;max-width:100%}
+.row.me{justify-content:flex-end}
+.row .av{width:30px;height:30px;font-size:13px}
+.msg{background:var(--bot);padding:9px 13px;border-radius:16px 16px 16px 4px;max-width:78%;white-space:pre-wrap;word-break:break-word}
+.me .msg{background:var(--me);color:#1f2d25;border-radius:16px 16px 4px 16px}
+.typing{display:inline-flex;gap:4px;padding:12px 14px}.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:b 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes b{50%{transform:translateY(-4px);opacity:.4}}
+.car{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;max-width:calc(100vw - 70px)}
+.fx{flex:none;width:262px;background:var(--paper);border-radius:14px;overflow:hidden;border:1px solid var(--line);scroll-snap-align:start;color:var(--ink)}
+.fh{background:var(--forest);padding:13px 15px}.fh small{display:block;color:var(--lime);font-size:10px;font-weight:700}.fh b{color:#fff;font-size:17px}
+.fb{padding:14px 15px;display:flex;flex-direction:column;gap:7px;font-size:13px}.ff{padding:0 12px 12px;display:flex;flex-direction:column;gap:6px}
+.bd{align-self:flex-start;color:#fff;border-radius:20px;padding:2px 12px;font-size:11px;font-weight:700}
+.big{font-size:22px;font-weight:800;line-height:1.2}
+.kv{display:flex;gap:8px;font-size:12.5px}.kv span:first-child{flex:3;color:var(--muted);font-size:11.5px}.kv span:last-child{flex:5}
+hr{border:0;border-top:1px solid var(--line);width:100%;margin:2px 0}
+.b{border:0;border-radius:8px;padding:9px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;background:var(--forest);color:#fff;width:100%}
+.b.s{background:var(--lime);color:var(--forest)}
+.b:hover{filter:brightness(1.1)}
+.pg{display:flex;gap:4px}.pg i{flex:1;height:6px;border-radius:3px;background:var(--line)}.pg i.on{background:var(--forest)}
+:root:is([data-theme="dark"]) .pg i.on{background:var(--lime)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pg i.on{background:var(--lime)}}
+.pl{display:flex;gap:4px;font-size:9.5px;color:var(--muted);text-align:center}.pl span{flex:1}
+.hint{background:#f1f5df;color:#1f2d25;border-radius:10px;padding:9px 11px;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.qr{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--chat)}
+.qr button{flex:none;border:1px solid var(--forest);color:var(--forest);background:var(--chip);border-radius:20px;padding:6px 13px;font:inherit;font-size:13px;cursor:pointer}
+:root[data-theme="dark"] .qr button{color:var(--lime);border-color:var(--lime)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .qr button{color:var(--lime);border-color:var(--lime)}}
+.in{display:flex;gap:8px;padding:8px 10px;background:var(--paper);border-top:1px solid var(--line);align-items:center}
+.in input{flex:1;border:1px solid var(--line);border-radius:20px;padding:9px 14px;font:inherit;background:var(--bg);color:var(--ink);min-width:0}
+.in button{border:0;background:var(--forest);color:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:16px;flex:none}
+.in .mn{background:var(--lime);color:var(--forest);font-weight:800}
+.rm{display:none;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px;background:var(--forest)}
+.rm.open{display:grid}
+.rm button{background:var(--forest2);color:#fff;border:0;border-radius:14px;padding:14px 4px 10px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.rm em{display:block;font-style:normal;font-size:26px;margin-bottom:2px}
+</style>
+</head>
+<body>
+<div class="tools">
+  <span>จำลองแจ้งเตือนอัตโนมัติ:</span>
+  <button data-p="w">ใกล้หมดประกัน</button><button data-p="i">ถึงรอบตรวจเช็ก</button><button data-p="t">อัปเดตงานซ่อม</button>
+  <button id="reset">เริ่มใหม่</button>
+</div>
+<div class="tools"><label>ดูในมุมลูกค้า <select id="who" style="font:inherit;border:1px solid var(--line);border-radius:12px;padding:4px 8px;background:var(--chip);color:var(--ink);max-width:260px"></select></label></div>
+<div class="phone">
+  <div class="top"><div class="av">C</div><div><b>CiViO Service</b><small>บัญชีทางการ · ตัวอย่างหน้าตา</small></div></div>
+  <div id="chat"></div>
+  <div class="qr" id="qr"></div>
+  <div class="rm" id="rm"></div>
+  <form class="in" id="f" onsubmit="return false"><button type="button" class="mn" id="mn" aria-label="เมนู">☰</button><input id="t" placeholder="พิมพ์ข้อความ…" autocomplete="off"><button id="s" aria-label="ส่ง">➤</button></form>
+</div>
+<script src="../js/core.js?v=5"></script>
+<script>
+const $=s=>document.querySelector(s),chat=$('#chat'),qr=$('#qr');
+/* อ่านข้อมูลจริงจากระบบหลังการขายในเบราว์เซอร์เดียวกัน (อ่านอย่างเดียว ไม่บันทึกกลับ ไม่มีข้อมูลสมมติ) */
+db=normalizeView(load());
+function normalizeView(d){d=d&&Array.isArray(d.customers)?d:seed();d.settings=Object.assign(defaultSettings(),d.settings);['machines','tickets','inspections','users'].forEach(k=>d[k]=d[k]||[]);return d}
+let sessionUser=null;try{const r=JSON.parse(sessionStorage.getItem(SKEY));sessionUser=r&&db.users.find(u=>u.id===r.userId)}catch(e){}
+const mine=sessionUser&&sessionUser.role==='customer';
+let CU=null,M=[],T=[];
+const show=n=>th(addDays(T0(),n));
+function pickWho(id){CU=db.customers.find(c=>c.id===id)||null;
+ const list=db.machines.filter(m=>CU&&m.customerId===CU.id);
+ M=list.map((m,i)=>({id:i,model:esc(m.model),serial:esc(m.serial),loc:esc(m.location||'-'),w:wInfo(m).days,i:diff(T0(),nextInsp(m))}));
+ T=db.tickets.filter(t=>CU&&t.customerId===CU.id).map(t=>({code:esc(t.id),m:list.findIndex(m=>m.id===t.machineId),sym:esc(t.symptom),st:t.status,ago:diff(t.createdAt,T0()),as:esc(t.assignee||'รอทีมช่างรับงาน'),rated:t.rating?1:0})).filter(t=>t.m>=0).slice(0,8)}
+const cname=()=>CU?esc(CU.name):'';
+const SYM=db.settings.symptoms.map(esc);
+const MENU=[['🛡️','เช็กประกัน','warranty'],['🔧','แจ้งซ่อม','repair'],['📋','ติดตามงาน','status'],['📅','นัดตรวจเช็ก','inspect'],['🌱','สินค้า/บริการ','products'],['📞','ติดต่อเรา','contact']];
+let S={s:'',d:{}},n=1;
+const mL=m=>`${m.model} · ${m.serial}`;
+const btn=(l,a,s)=>`<button class="b${s?' s':''}" data-a="${a}" data-l="${l}">${l}</button>`;
+const bd=(t,c)=>`<span class="bd" style="background:var(--${c})">${t}</span>`;
+const kv=(k,v)=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`;
+const fx=(t,e,b,f)=>`<div class="fx"><div class="fh"><small>${e}</small><b>${t}</b></div><div class="fb">${b}</div>${f?`<div class="ff">${f}</div>`:''}</div>`;
+const car=a=>`<div class="car">${a.join('')}</div>`;
+function add(who,html,raw){const r=document.createElement('div');r.className='row '+who;r.innerHTML=(who==='bot'?'<div class="av">C</div>':'')+(raw?`<div>${html}</div>`:`<div class="msg">${html}</div>`);chat.appendChild(r);chat.scrollTop=chat.scrollHeight;return r}
+function bot(items,quick){const t=add('bot','<span class="typing"><i></i><i></i><i></i></span>');qr.innerHTML='';
+ setTimeout(()=>{t.remove();items.forEach(x=>typeof x==='string'?add('bot',x):add('bot',x.h,1));
+  qr.innerHTML=(quick||[]).map(q=>`<button data-a="${q[1]}" data-l="${q[0]}">${q[0]}</button>`).join('');chat.scrollTop=chat.scrollHeight},520)}
+const MQ=[['🛡️ เช็กประกัน','warranty'],['🔧 แจ้งซ่อม','repair'],['📋 ติดตามงาน','status'],['📞 ติดต่อเรา','contact']];
+/* ---- การ์ด ---- */
+const welcome=()=>({h:fx('CiViO Service','ดูแลหลังการขาย',`<b>สวัสดีครับ</b><span style="color:var(--muted)">${CU?'เชื่อมกับบัญชี '+cname()+' แล้ว ':''}ดูประกัน แจ้งซ่อม และติดตามงานได้จากเมนูด้านล่างเลยครับ</span><hr><div class="grid">${MENU.map(m=>btn(m[0]+' '+m[1],m[2],1)).join('')}</div>`)});
+function mcard(m){const d=m.w,c=d<0?'bad':d<=90?'warn':'ok';const id=m.i;
+ return fx(m.model,'ซีเรียล '+m.serial,`${bd(d<0?'หมดประกันแล้ว':d<=90?'ใกล้หมดประกัน':'อยู่ในประกัน',c)}<div class="big" style="color:var(--${c})">${d<0?'หมดมาแล้ว '+-d:'เหลือ '+d} วัน</div><hr>${kv('หมดประกัน',show(d))}${kv('ตรวจเช็กถัดไป',id<0?'เลยกำหนด '+-id+' วัน':id<=14?'อีก '+id+' วัน':show(id))}${kv('ติดตั้งที่',m.loc)}`,btn('แจ้งซ่อมเครื่องนี้','repair&m='+m.id)+btn('ขอตรวจเช็ก','inspect&m='+m.id,1))}
+function prog(st){const i={'ใหม่':0,'นัดหมายแล้ว':1,'กำลังดำเนินการ':2,'รออะไหล่':2,'เสร็จสิ้น':3,'ปิดงาน':3}[st];const L=['รับเรื่อง','นัดหมาย','ดำเนินการ','เสร็จสิ้น'];
+ return `<div class="pg">${L.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div><div class="pl">${L.map(x=>`<span>${x}</span>`).join('')}</div>`}
+function tcard(t){const done=t.st==='เสร็จสิ้น',m=M[t.m];
+ return fx('งาน '+t.code,'ติดตามงานซ่อม',`${bd(t.st,done?'ok':t.st==='ใหม่'?'bad':'info')}${prog(t.st)}<hr>${kv('เครื่อง',mL(m))}${kv('อาการ',t.sym)}${kv('แจ้งเมื่อ',show(-t.ago))}${kv('ผู้รับผิดชอบ',t.as)}`,done&&!t.rated?btn('ให้คะแนนบริการ','ratemenu&t='+t.code,1):'')}
+function remind(k){const w=k==='w';const m=[...M].sort((a,b)=>w?Math.abs(a.w)-Math.abs(b.w):a.i-b.i)[0];const d=w?m.w:m.i;
+ return fx(w?'ใกล้หมดประกัน':'ถึงรอบตรวจเช็ก',w?'แจ้งเตือนประกัน':'แจ้งเตือนตรวจเช็ก',`<b>เรียนคุณ${esc(who(CU))}</b><span style="color:var(--muted);font-size:12px">${mL(m)}</span><div class="big" style="font-size:26px;color:var(--${w?'warn':'info'})">${d<0?'เลยกำหนด '+-d:'อีก '+d} วัน</div>${kv(w?'หมดประกัน':'ครบรอบ',show(d))}<hr><span style="font-size:12px;color:var(--muted)">${w?'สนใจต่อประกัน/สัญญาบริการ หรือขอตรวจเช็กก่อนหมดประกัน กดปุ่มด้านล่างได้เลยครับ':'ตรวจเช็กตามรอบช่วยให้เครื่องทำงานเต็มประสิทธิภาพ กดนัดหมายได้เลยครับ'}</span>`,btn(w?'ขอตรวจเช็กก่อนหมดประกัน':'นัดตรวจเช็ก','inspect&m='+m.id)+btn('โทรหาทีมงาน','contact',1))}
+/* ---- ตรรกะบอท ---- */
+function pickM(a,act){if(a.m!==undefined)return M[+a.m];return null}
+function act(a,label){const k=a.act||'menu';
+ if(k==='menu')return bot([welcome()],MQ);
+ if(k==='contact')return bot([{h:fx('ติดต่อเรา','CiViO Thailand',`<b>ทีมบริการลูกค้า CiViO พร้อมช่วยเหลือ</b>${kv('โทร','086-351-7534')}${kv('เวลาทำการ','จันทร์–เสาร์ 08:30–17:30')}${kv('เว็บไซต์','civio.co.th')}`,btn('โทรหาทีมงาน','tel')+btn('เปิดเว็บไซต์','web',1))}],MQ);
+ if(k==='tel'||k==='web')return bot(['(หน้าตัวอย่างนี้ปุ่มยังไม่ได้เชื่อมต่อ — บน LINE จริงจะเปิดโทรศัพท์/เว็บไซต์)'],MQ);
+ if(k==='products')return bot([{h:car(['เครื่องกำจัดเศษอาหาร CiViO|รุ่น CV15–CV1000 เปลี่ยนเศษอาหารเป็นวัสดุปรับปรุงดินในไม่กี่ชั่วโมง','KAIBIN · NovaBinQ|ถังหมักและระบบจัดการขยะอินทรีย์','ผักปลอดสารจากฟาร์ม CiViO|ผักสดจากระบบเกษตรหมุนเวียน','คอร์สอบรม|คัดแยกขยะและปลูกผักอินทรีย์'].map(x=>{const[p,q]=x.split('|');return fx(p,'สินค้า/บริการ',q,btn('ดูรายละเอียด','web'))}))}],MQ);
+ if(['warranty','repair','inspect','status'].includes(k)&&!M.length)return bot(['ยังไม่มีเครื่องในระบบสำหรับตัวอย่างนี้ครับ ลงทะเบียนลูกค้าและเครื่องในระบบก่อน แล้วกด "เริ่มใหม่"'],MQ);
+ if(k==='warranty')return bot(['เครื่องของ '+cname()+' ครับ 👇',{h:car(M.map(mcard))}],MQ);
+ if(k==='status')return T.length?bot([{h:car(T.map(tcard))}],MQ):bot(['ยังไม่มีรายการแจ้งซ่อมครับ'],MQ);
+ if(k==='repair'||k==='inspect'){const m=pickM(a);
+  if(!m)return bot(['เลือกเครื่องที่ต้องการครับ'],M.map(x=>[mL(x).slice(0,20),k+'&m='+x.id]));
+  if(k==='inspect'){S={s:'confirm',d:{m:m.id,sym:'ตรวจเช็กตามรอบ',desc:'',kind:'i'}};return confirm()}
+  S={s:'sym',d:{m:m.id,kind:'r'}};return bot(['เครื่อง '+mL(m)+'\nมีอาการอย่างไรครับ?'],SYM.map((s,i)=>[s,'sym&i='+i]))}
+ if(k==='sym'&&S.s==='sym'){S.d.sym=SYM[+a.i];S.s='desc';return bot(['พิมพ์รายละเอียดเพิ่มเติมได้เลยครับ (เช่น เริ่มเป็นเมื่อไหร่ มีรหัสแจ้งเตือนไหม) หรือกด "ข้าม"'],[['ข้าม','skip'],['ยกเลิก','cancel']])}
+ if(k==='skip'&&S.s==='desc')return confirm();
+ if(k==='cancel'){S={s:'',d:{}};return bot(['ยกเลิกแล้วครับ'],MQ)}
+ if(k==='confirm'&&S.s==='confirm'){const d=S.d,m=M[d.m],code='ตัวอย่าง-'+n++;
+  const t={code,m:d.m,sym:d.sym,st:'ใหม่',ago:0,as:'รอทีมช่างรับงาน'};T.unshift(t);S={s:'',d:{}};
+  return bot([(d.kind==='i'?'รับเรื่องนัดตรวจเช็กแล้วครับ ทีมงานจะติดต่อกลับเพื่อนัดวันเวลา ✅':'รับเรื่องแล้วครับ ทีมช่างจะติดต่อกลับโดยเร็ว ✅')+'\n(ตัวอย่างเท่านั้น ไม่ได้บันทึกเข้าระบบ)',{h:car([tcard(t)])}],MQ)}
+ if(k==='ratemenu')return bot(['งาน '+a.t+' พอใจบริการแค่ไหนครับ?'],[5,4,3,2,1].map(x=>['⭐'.repeat(x),'rate&t='+a.t+'&s='+x]));
+ if(k==='rate'){const t=T.find(x=>x.code===a.t);if(t)t.rated=1;return bot(['ขอบคุณสำหรับ '+a.s+' ดาวครับ 🙏 ทีมงานจะนำไปปรับปรุงบริการ'],MQ)}
+ bot(['ขออภัยครับ ตอนนี้ขั้นตอนนี้หมดอายุแล้ว เริ่มใหม่ได้จากเมนูครับ'],MQ)}
+function confirm(){const d=S.d,m=M[d.m],u=d.kind==='r'&&d.sym===SYM[0];S.s='confirm';
+ bot([{h:car([fx('ตรวจสอบก่อนส่ง','ยืนยันแจ้งซ่อม',kv('เครื่อง',mL(m))+kv('อาการ',d.sym)+kv('รายละเอียด',d.desc||'-')+kv('ความเร่งด่วน',u?'ด่วน':'ปกติ'),btn('ยืนยันส่งเรื่อง','confirm')+btn('ยกเลิก','cancel',1))])}])}
+function text(t){const x=t.trim();if(!x)return;
+ if(S.s==='desc'){S.d.desc=x.slice(0,500);return confirm()}
+ if(/^ยกเลิก/.test(x))return act({act:'cancel'});
+ const map=[['warranty','ประกัน'],['repair','ซ่อม|เสีย'],['status','สถานะ|ติดตาม'],['inspect','ตรวจเช็ก|นัด'],['contact','ติดต่อ|โทร|เบอร์'],['products','สินค้า|บริการ|ราคา|คอร์ส'],['menu','เมนู|สวัสดี|hi|hello']];
+ for(const[a,w]of map)if(new RegExp(w,'i').test(x))return act({act:a});
+ bot(['ขออภัยครับ ยังไม่เข้าใจข้อความนี้ 🙏 เลือกเมนูด้านล่าง หรือพิมพ์ "เมนู" ได้เลยครับ'],MQ)}
+/* ---- ตัวควบคุมหน้า ---- */
+function user(l){add('me',esc(l))}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b){$('#rm').classList.remove('open');user(b.dataset.l);act(Object.fromEntries(new URLSearchParams(b.dataset.a.includes('=')||b.dataset.a.includes('&')?(b.dataset.a.startsWith('act=')?b.dataset.a:'act='+b.dataset.a.replace('&','&')):'act='+b.dataset.a)));return}
+ const p=e.target.closest('[data-p]');if(p){const k=p.dataset.p;qr.innerHTML='';if(!M.length||(k==='t'&&!T.length))return add('bot',k==='t'&&M.length?'ยังไม่มีงานในระบบให้แสดงตัวอย่าง':'ยังไม่มีเครื่องในระบบให้แสดงตัวอย่าง');add('bot','🔔 ข้อความอัตโนมัติจากระบบ (ตัวอย่าง)');add('bot',k==='t'?tcard(T[0]):remind(k),1);return}
+ if(e.target.closest('.rm button')){const a=e.target.closest('.rm button');$('#rm').classList.remove('open');user(a.dataset.l);act({act:a.dataset.a})}});
+$('#mn').onclick=()=>$('#rm').classList.toggle('open');
+const send=()=>{const i=$('#t');if(!i.value.trim())return;const v=i.value;i.value='';user(v);text(v)};
+$('#s').onclick=send;$('#t').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();send()}});
+$('#rm').innerHTML=MENU.map(m=>`<button data-a="${m[2]}" data-l="${m[0]} ${m[1]}"><em>${m[0]}</em>${m[1]}</button>`).join('');
+$('#reset').onclick=()=>{chat.innerHTML='';S={s:'',d:{}};start()};
+function start(){bot([welcome()],MQ)}
+const sel=$('#who'),avail=mine?db.customers.filter(c=>c.id===sessionUser.customerId):db.customers;
+sel.innerHTML=avail.length?avail.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join(''):'<option value="">ยังไม่มีลูกค้าในระบบ</option>';
+const first=avail.find(c=>db.machines.some(m=>m.customerId===c.id))||avail[0];if(first)sel.value=first.id;pickWho(sel.value);
+sel.onchange=()=>{pickWho(sel.value);$('#reset').click()};
+start();
+</script>
+</body>
+</html>
