@@ -1,0 +1,168 @@
+/* CiViO refine layer — loaded last. Icons, envelope contact button, product autoplay bar. */
+
+/* ---------- unified SVG icons (replace text arrows ↗ → ← ↓ ⌄) ---------- */
+.ic{display:inline-block;width:1em;height:1em;vertical-align:-.16em;flex:none;transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+b>.ic,span>.ic{font-size:1em}
+.btn>span,.btn>b,.btn-link>span,.btn-link>b,.under-link>span,.under-link>b,.product-detail-link>b,.text-arrow>b,
+.ft-btn>b,.sf-cta-btn>b,.contact-form button>span{display:inline-flex;align-items:center;justify-content:center;font-size:1.15em;line-height:1}
+.btn:hover .ic-ne,.btn-link:hover .ic-ne,.under-link:hover .ic-ne,.product-detail-link:hover .ic-ne,.text-arrow:hover .ic-ne,
+.ft-btn:hover .ic-ne,.sf-cta-btn:hover .ic-ne,.contact-form button:hover .ic-ne{transform:translate(2px,-2px)}
+.btn:hover .ic-right,.btn-link:hover .ic-right,.text-arrow:hover .ic-right,.product-detail-link:hover .ic-right{transform:translateX(3px)}
+.btn-link:hover .ic-down,.hero-bottom a:hover .ic-down{transform:translateY(3px)}
+.nav-dropdown-toggle .ic-chev{width:.95em;height:.95em;margin-left:2px}
+.nav-dropdown:hover .ic-chev,.nav-dropdown.is-open .ic-chev{transform:rotate(180deg)}
+.product-carousel-arrows button{display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+.product-carousel-arrows button:hover .ic-left{transform:translateX(-2px)}
+.product-carousel-arrows button:hover .ic-right{transform:translateX(2px)}
+.kn-stat i{display:inline-flex;align-items:center}
+.hero-bottom a b{display:inline-flex;align-items:center}
+
+/* ---------- envelope "ปรึกษา CiViO" button (header) ---------- */
+.nav-contact-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media(min-width:981px){
+  .site-head .header-inner{max-width:1200px;padding:0}
+  .site-head .main-nav>a.nav-contact{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:46px;height:46px;padding:0;margin-left:22px;border-radius:50%;
+    background:linear-gradient(145deg,#2f6047,#163b2d);color:#fff;
+    box-shadow:0 8px 18px rgba(22,59,45,.22);
+  }
+  .site-head .main-nav>a.nav-contact .ic-mail{width:22px;height:22px;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .site-head .main-nav>a.nav-contact:hover .ic-mail{transform:translateY(-1px) scale(1.12) rotate(-6deg)}
+  .site-head .main-nav>a.nav-contact:focus-visible{outline:3px solid #91aa57;outline-offset:3px}
+  .site-head .main-nav>a.nav-contact::before{
+    content:"";position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;
+    background:#d9ef79;box-shadow:0 0 0 2px #163b2d;animation:mailPing 2.6s ease-out infinite;
+  }
+}
+@keyframes mailPing{0%{box-shadow:0 0 0 2px #163b2d,0 0 0 2px rgba(217,239,121,.7)}70%,100%{box-shadow:0 0 0 2px #163b2d,0 0 0 9px rgba(217,239,121,0)}}
+@media(max-width:980px){
+  .main-nav>a.nav-contact{display:inline-flex;align-items:center;gap:10px;justify-content:center}
+  .main-nav>a.nav-contact .nav-contact-label{position:static;width:auto;height:auto;overflow:visible;clip:auto}
+}
+
+/* ---------- hero footnote (replaces the 24 HOURS badge) ---------- */
+.hero-footnote{margin:12px 0 0;font-size:12.5px;line-height:1.6;color:#d5dfd3;opacity:.9}
+
+/* ---------- product carousel: autoplay progress + gentle motion ---------- */
+.product-autoplay-bar{max-width:1040px;height:3px;margin:16px auto 0;border-radius:3px;background:#e1e8da;overflow:hidden}
+.product-autoplay-bar span{display:block;height:100%;width:100%;border-radius:3px;background:linear-gradient(90deg,#8ca75c,#d9ef79);transform-origin:left center;transform:scaleX(0);animation:productAutoFill 5s linear infinite}
+@keyframes productAutoFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.product-slide{transition:transform .9s cubic-bezier(.22,.8,.22,1),opacity .7s ease,box-shadow .7s ease!important}
+.product-slide.is-active .slide-product-foot,.product-slide.is-active .product-meta,.product-slide.is-active h3{animation:productRise .8s cubic-bezier(.2,.7,.2,1) both}
+.product-slide.is-active h3{animation-delay:.08s}
+.product-slide.is-active .slide-product-foot{animation-delay:.16s}
+@keyframes productRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .product-autoplay-bar{display:none}
+  .product-slide.is-active .slide-product-foot,.product-slide.is-active .product-meta,.product-slide.is-active h3,.nav-contact::before{animation:none!important}
+}
+
+/* ======================================================================
+   Product detail pages: course + vegetables — richer content & photos
+   ====================================================================== */
+.cx-sec{padding-block:clamp(36px,5vw,70px)}
+.cx-grid-2{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(28px,5vw,68px);align-items:center}
+.cx-grid-2.cx-reverse .cx-media{order:-1}
+.cx-copy .eyebrow{margin-bottom:14px}
+.cx-copy h2{font-size:clamp(28px,3.3vw,42px);line-height:1.3;margin:0 0 18px;color:#163b2d;letter-spacing:-.02em}
+.cx-copy h2 em{font-style:normal;color:#6f8f45}
+.cx-copy p{font-size:16px;line-height:1.95;color:#4d5e50;margin:0 0 14px}
+.cx-copy .check-list{margin-top:18px}
+.cx-media{position:relative;min-height:380px}
+.cx-media figure{margin:0;position:absolute;overflow:hidden;border-radius:22px;box-shadow:0 24px 56px rgba(22,59,45,.18);background:#dbe9cb}
+.cx-media figure img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.cx-media figure:hover img{transform:scale(1.05)}
+.cx-media .cx-ph-a{inset:0 18% 14% 0}
+.cx-media .cx-ph-b{right:0;bottom:0;width:48%;height:46%;border:6px solid #fffefa;border-radius:20px}
+.cx-media .cx-badge{position:absolute;left:18px;top:18px;z-index:3;background:rgba(255,254,250,.94);color:#163b2d;font:700 12px/1 var(--latin);letter-spacing:.12em;padding:9px 13px;border-radius:99px;box-shadow:0 8px 20px rgba(22,59,45,.15)}
+.cx-media-single{min-height:0}
+.cx-media-single figure{position:relative;inset:auto;aspect-ratio:5/4}
+.cx-media-single .cx-float{position:absolute;right:-14px;bottom:26px;z-index:3;background:#163b2d;color:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 16px 36px rgba(22,59,45,.28);max-width:210px}
+.cx-media-single .cx-float b{display:block;font-size:15px;color:#d9ef79;margin-bottom:2px}
+.cx-media-single .cx-float span{font-size:12.5px;line-height:1.5;opacity:.9}
+
+/* feature cards */
+.cx-cards{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:18px;margin-top:30px}
+.cx-card{position:relative;background:#fffefa;border:1px solid #e0e8d9;border-radius:20px;padding:28px 26px 26px;box-shadow:0 12px 32px rgba(22,59,45,.07);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s;overflow:hidden}
+.cx-card::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#8ca75c,#d9ef79);transform:scaleX(0);transform-origin:left;transition:transform .45s}
+.cx-card:hover{transform:translateY(-6px);box-shadow:0 22px 46px rgba(22,59,45,.14);border-color:#c9d9b8}
+.cx-card:hover::after{transform:scaleX(1)}
+.cx-ico{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#eef5e0,#dcebc6);color:#2f6047;margin-bottom:18px}
+.cx-ico svg{width:28px;height:28px}
+.cx-card h3{font-size:19px;line-height:1.4;margin:0 0 10px;color:#163b2d}
+.cx-card p{font-size:14.5px;line-height:1.85;color:#5a6a5c;margin:0}
+
+/* photo mosaic */
+.cx-mosaic{display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:260px 260px;gap:16px;margin-top:30px}
+.cx-mosaic figure{position:relative;margin:0;overflow:hidden;border-radius:22px;background:#dbe9cb;box-shadow:0 16px 40px rgba(22,59,45,.12)}
+.cx-mosaic figure:first-child{grid-row:1/3}
+.cx-mosaic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.cx-mosaic figure:hover img{transform:scale(1.06)}
+.cx-mosaic figcaption{position:absolute;left:0;right:0;bottom:0;padding:44px 20px 16px;color:#fff;font-size:14px;font-weight:600;line-height:1.5;background:linear-gradient(180deg,transparent,rgba(9,35,22,.78))}
+.cx-mosaic figcaption small{display:block;font:700 10.5px var(--latin);letter-spacing:.14em;color:#d9ef79;margin-bottom:3px}
+
+/* number stats band */
+.cx-band{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:30px;border-radius:22px;overflow:hidden;background:linear-gradient(120deg,#163b2d,#214b39);color:#fff}
+.cx-band div{padding:26px 28px;border-right:1px solid rgba(255,255,255,.12)}
+.cx-band div:last-child{border:0}
+.cx-band b{display:block;font-size:20px;color:#d9ef79;margin-bottom:6px}
+.cx-band span{font-size:14px;line-height:1.7;opacity:.88}
+
+/* tips list */
+.cx-tips{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px}
+.cx-tips li{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:#f4f8ec;border:1px solid #e3ebd6;font-size:15px;line-height:1.7;color:#3f5243}
+.cx-tips li i{flex:none;width:28px;height:28px;border-radius:50%;background:#163b2d;color:#d9ef79;font:800 13px/28px var(--latin);text-align:center;font-style:normal}
+
+/* richer curriculum steps */
+.detail-step p{line-height:1.85}
+.cx-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cx-tags span{font-size:11.5px;padding:4px 10px;border-radius:99px;background:#eef5e0;color:#4b6a3a;font-weight:600}
+
+@media(max-width:900px){
+  .cx-grid-2,.cx-grid-2.cx-reverse{grid-template-columns:1fr}
+  .cx-grid-2.cx-reverse .cx-media{order:0}
+  .cx-media{min-height:340px}
+  .cx-cards{grid-template-columns:1fr 1fr}
+  .cx-band{grid-template-columns:1fr}
+  .cx-band div{border-right:0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .cx-mosaic{grid-template-rows:200px 200px}
+}
+@media(max-width:600px){
+  .cx-cards{grid-template-columns:1fr}
+  .cx-mosaic{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:220px}
+  .cx-mosaic figure:first-child{grid-row:auto;height:260px}
+  .cx-media-single .cx-float{position:static;margin-top:12px;max-width:none}
+  .cx-media .cx-ph-b{width:52%}
+}
+
+/* course curriculum: balanced 3-column grid */
+#curriculum .detail-steps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:900px){#curriculum .detail-steps-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){#curriculum .detail-steps-grid{grid-template-columns:1fr}}
+
+/* two-photo mosaic + image-free tips block */
+.cx-mosaic.cx-mosaic-2{grid-template-columns:1.45fr 1fr;grid-template-rows:340px}
+.cx-mosaic.cx-mosaic-2 figure:first-child{grid-row:auto}
+.cx-tips-wrap{grid-template-columns:1fr 1fr;align-items:start}
+.cx-tips-wrap .cx-tips{margin-top:0}
+.cx-tips-wrap .cx-copy p{margin-bottom:0}
+@media(max-width:900px){.cx-tips-wrap{grid-template-columns:1fr}}
+@media(max-width:600px){.cx-mosaic.cx-mosaic-2{grid-template-columns:1fr;grid-auto-rows:240px;grid-template-rows:none}}
+
+/* activity photo gallery */
+.ad-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
+.ad-gallery figure{margin:0;border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:#e8eedf}
+.ad-gallery img{display:block;width:100%;height:100%;object-fit:cover}
+@media(max-width:640px){.ad-gallery{grid-template-columns:1fr 1fr}.ad-gallery figure:first-child{grid-column:1/-1}}
+
+/* home activities: three equal cards, identical type & colours */
+.act-home .act-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none;gap:24px}
+.act-home .act-card:first-child{grid-row:auto;min-height:0}
+.act-home .act-card .act-thumb{aspect-ratio:3/2;min-height:0}
+.act-home .act-card .act-body,.act-home .act-card:first-child .act-body{padding:20px 22px 22px;gap:8px;justify-content:flex-start}
+.act-home .act-card time{font:600 13px var(--thai);color:#6c786f}
+.act-home .act-card .act-body h3,.act-home .act-card:first-child .act-body h3{font:700 17.5px/1.5 var(--thai);color:#163b2d;min-height:3em;-webkit-line-clamp:2}
+.act-home .act-card .act-body p,.act-home .act-card:not(:first-child) .act-body p{display:-webkit-box;font-size:14.5px;line-height:1.7;color:#4d5c52;min-height:3.4em;-webkit-line-clamp:2}
+@media(max-width:1000px){.act-home .act-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.act-home .act-grid{grid-template-columns:1fr}}
